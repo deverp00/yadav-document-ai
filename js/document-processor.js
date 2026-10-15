@@ -15,7 +15,7 @@
    Test status: NOT browser-tested. Awaiting Phase 3 verification.
 
    --------------------------------------------------------------------------
-   PUBLIC API — window.YDADocumentProcessor (frozen)
+   PUBLIC API - window.YDADocumentProcessor (frozen)
 
      YDADocumentProcessor.VERSION
        String identifier of this module.
@@ -100,7 +100,7 @@
      Constants
      ======================================================================== */
 
-  var VERSION = 'yda-docproc-1.0.0-phase3';
+  var VERSION = 'yda-docproc-1.0.1-phase3';
 
   var SUPPORTED_TYPES = [
     'application/pdf',
@@ -335,11 +335,11 @@
      Library loading (lazy, cached)
      ======================================================================== */
 
-  function loadScriptOnce(url, globalCheck) {
-    // If the global is already present, resolve immediately.
-    if (isFunction(globalCheck)) {
-      return globalCheck();
-    }
+  /**
+   * Append a script tag and resolve once it has loaded, or reject if the
+   * network or CDN fails. Always returns a Promise.
+   */
+  function loadScriptOnce(url) {
     return new Promise(function (resolve, reject) {
       var script = document.createElement('script');
       script.src = url;
@@ -363,9 +363,7 @@
       return pdfjsLoadingPromise;
     }
 
-    pdfjsLoadingPromise = loadScriptOnce(PDFJS_MAIN_URL, function () {
-      return null; // always actually load
-    }).then(function () {
+    pdfjsLoadingPromise = loadScriptOnce(PDFJS_MAIN_URL).then(function () {
       var lib = window.pdfjsLib;
       if (!lib) {
         throw makeError(ERROR_CODES.LIB_LOAD_FAILED, 'pdfjsLib missing');
@@ -399,9 +397,7 @@
       return tesseractLoadingPromise;
     }
 
-    tesseractLoadingPromise = loadScriptOnce(TESSERACT_MAIN_URL, function () {
-      return null;
-    }).then(function () {
+    tesseractLoadingPromise = loadScriptOnce(TESSERACT_MAIN_URL).then(function () {
       var lib = window.Tesseract;
       if (!lib) {
         throw makeError(ERROR_CODES.LIB_LOAD_FAILED, 'Tesseract missing');
