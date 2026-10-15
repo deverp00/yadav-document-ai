@@ -100,7 +100,7 @@
      Constants
      ======================================================================== */
 
-  var VERSION = 'yda-docproc-1.0.1-phase3';
+  var VERSION = 'yda-docproc-1.0.2-phase3';
 
   var SUPPORTED_TYPES = [
     'application/pdf',
@@ -133,6 +133,10 @@
   var DEFAULT_OCR_LANGUAGE = 'eng';
   var DEFAULT_OCR_MAX_PAGES = 30;
   var DEFAULT_PDF_RENDER_SCALE = 2;
+
+  /* OEM.LSTM_ONLY - the default OEM in Tesseract.js v4. Passed explicitly
+     so the call site documents the intended engine. */
+  var TESSERACT_OEM_LSTM_ONLY = 1;
 
   var ERROR_CODES = {
     INVALID_TYPE: 'INVALID_TYPE',
@@ -181,6 +185,12 @@
   var tesseractLoadingPromise = null;   // in-flight Tesseract load
   var tesseractWorker = null;           // cached Tesseract worker
   var tesseractWorkerLang = null;       // language the worker was created for
+
+  /* Dispatcher for the shared worker's logger. The worker is cached across
+     pages and files, so its createWorker options can only reference a stable
+     function. This variable is swapped for the duration of each recognise
+     call and cleared afterwards. */
+  var activeOcrLogger = null;
 
   var activeAbort = null;               // internal AbortController for cancel()
 
@@ -416,6 +426,12 @@
   /**
    * Return a Tesseract worker for the given language, reusing one if the
    * language matches. Creating a worker is expensive; reuse is important.
+   *
+   * In Tesseract.js v4 the logger belongs to createWorker, not to recognize.
+   * The worker is cached across pages and files, so the logger is a thin
+   * dispatcher that calls whatever function is currently stored in
+   * activeOcrLogger. The recognize call site swaps that variable for the
+   * duration of each page.
    */
   function getTesseractWorker(language) {
     if (tesseractWorker && tesseractWorkerLang === language) {
@@ -433,7 +449,13 @@
     return disposing
       .then(loadTesseract)
       .then(function (lib) {
-        return lib.createWorker(language);
+        return lib.createWorker(language, TESSERACT_OEM_LSTM_ONLY, {
+          logger: function (message) {
+            if (activeOcrLogger) {
+              activeOcrLogger(message);
+            }
+          }
+        });
       })
       .then(function (worker) {
         tesseractWorker = worker;
@@ -510,22 +532,34 @@
      OCR
      ======================================================================== */
 
+  /**
+   * Recognise text in a data URL. The per-page progress callback is installed
+   * on activeOcrLogger before recognize() is called, and cleared in both the
+   * resolve and reject paths so a later page never fires a stale callback.
+   */
   function ocrDataUrl(dataUrl, language, onProgress, pageLabel) {
     return getTesseractWorker(language).then(function (worker) {
-      return worker.recognize(dataUrl, {
-        // Tesseract's logger is called frequently; throttle to meaningful
-        // changes so the UI does not flicker.
-        logger: function (message) {
-          if (
-            message &&
-            message.status === 'recognizing text' &&
-            typeof message.progress === 'number'
-          ) {
-            var pct = Math.round(message.progress * 100);
-            safeCall(onProgress, pct, pageLabel);
-          }
+      activeOcrLogger = function (message) {
+        if (
+          message &&
+          message.status === 'recognizing text' &&
+          typeof message.progress === 'number'
+        ) {
+          var pct = Math.round(message.progress * 100);
+          safeCall(onProgress, pct, pageLabel);
         }
-      });
+      };
+
+      return worker.recognize(dataUrl).then(
+        function (result) {
+          activeOcrLogger = null;
+          return result;
+        },
+        function (err) {
+          activeOcrLogger = null;
+          throw err;
+        }
+      );
     });
   }
 
@@ -968,6 +1002,8 @@
       tesseractWorker = null;
       tesseractWorkerLang = null;
     }
+
+    activeOcrLogger = null;
 
     return Promise.all(work).then(function () {
       // PDF.js document proxies are per-call; nothing global to release.
