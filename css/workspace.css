@@ -61,8 +61,15 @@
    2. Upload area
    The file input is visually hidden inside the label. The focus ring is drawn
    on the dropzone for keyboard users only.
+
+   The dropzone is set to position: relative so it becomes the containing
+   block for the .visually-hidden file input (which is absolutely positioned
+   by css/style.css). Without this, the hidden input is anchored to an
+   ancestor outside the dropzone and focus/scroll behaviour becomes
+   unpredictable when the input is focused or activated.
    -------------------------------------------------------------------------- */
 .dropzone {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
