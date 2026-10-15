@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<!--
+  Yadav Document AI
+  File: dashboard.html
+  Purpose: Dashboard page and the reference application shell.
+  Depends on: css/style.css, css/components.css, css/dashboard.css, js/script.js
+  Developed by Yadav Web Technologies
+
+  Shell template: workspace.html, history.html and settings.html reuse the
+  sidebar, overlay, top bar and footer from this file. Only these parts change
+  per page: <title>, body[data-page], the aria-current attribute on the active
+  nav link, the top bar title, and the contents of <main>.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | Yadav Document AI</title>
+  <meta name="description" content="Start a new document analysis and check the status of Yadav Document AI.">
+  <meta name="theme-color" content="#2253d4">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232253d4'/%3E%3Cpath d='M10 9l6 8 6-8M16 17v7' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <script src="js/script.js" defer></script>
+</head>
+<body data-page="dashboard">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="app-shell">
+
+    <!-- ===================== Sidebar ===================== -->
+    <aside class="sidebar" id="sidebar" aria-label="Application sidebar">
+      <div class="sidebar-header">
+        <a class="brand" href="dashboard.html" aria-label="Yadav Document AI dashboard">
+          <span class="brand-mark" aria-hidden="true">YD</span>
+          <span class="brand-text">
+            <span class="brand-name">Yadav Document AI</span>
+            <span class="brand-sub">by Yadav Web Technologies</span>
+          </span>
+        </a>
+        <button type="button" class="btn btn-icon btn-ghost sidebar-close" data-nav-close aria-label="Close navigation menu">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6 6l12 12"/>
+            <path d="M18 6L6 18"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Primary">
+        <ul class="nav-list">
+          <li>
+            <a class="nav-link" href="dashboard.html" data-page="dashboard" aria-current="page">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="3" y="3" width="7" height="9" rx="1"/>
+                <rect x="14" y="3" width="7" height="5" rx="1"/>
+                <rect x="14" y="12" width="7" height="9" rx="1"/>
+                <rect x="3" y="16" width="7" height="5" rx="1"/>
+              </svg>
+              <span class="nav-label">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="workspace.html" data-page="workspace">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>
+                <path d="M14 3v5h5"/>
+                <path d="M9 13h6"/>
+                <path d="M9 17h6"/>
+              </svg>
+              <span class="nav-label">Document Workspace</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="history.html" data-page="history">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v5l3 2"/>
+              </svg>
+              <span class="nav-label">Processing History</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link is-upcoming" href="#" data-page="export" aria-disabled="true">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 4v11"/>
+                <path d="m7 11 5 5 5-5"/>
+                <path d="M5 20h14"/>
+              </svg>
+              <span class="nav-label">Export Center</span>
+              <span class="badge badge-neutral">Upcoming</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="settings.html" data-page="settings">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4 6h10"/>
+                <path d="M18 6h2"/>
+                <circle cx="16" cy="6" r="2"/>
+                <path d="M4 12h2"/>
+                <path d="M10 12h10"/>
+                <circle cx="8" cy="12" r="2"/>
+                <path d="M4 18h10"/>
+                <path d="M18 18h2"/>
+                <circle cx="16" cy="18" r="2"/>
+              </svg>
+              <span class="nav-label">Settings</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link is-upcoming" href="#" data-page="help" aria-disabled="true">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7"/>
+                <path d="M12 17h.01"/>
+              </svg>
+              <span class="nav-label">Help</span>
+              <span class="badge badge-neutral">Upcoming</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>Files are read in your browser. Extracted text is sent for AI analysis only after you confirm.</p>
+      </div>
+    </aside>
+
+    <div class="sidebar-overlay" aria-hidden="true"></div>
+
+    <!-- ===================== Page body ===================== -->
+    <div class="app-body">
+
+      <!-- Top bar -->
+      <header class="topbar">
+        <div class="topbar-start">
+          <button type="button" class="btn btn-icon btn-ghost nav-toggle" data-nav-toggle aria-label="Open navigation menu">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4 6h16"/>
+              <path d="M4 12h16"/>
+              <path d="M4 18h16"/>
+            </svg>
+          </button>
+          <span class="topbar-title">Dashboard</span>
+        </div>
+        <div class="topbar-end">
+          <span class="badge badge-success" data-connection-status>Online</span>
+          <span class="user-chip" aria-label="Guest session">
+            <span class="avatar" aria-hidden="true">G</span>
+            <span class="user-chip-label">Guest</span>
+          </span>
+        </div>
+      </header>
+
+      <!-- Main content -->
+      <main class="main" id="main" tabindex="-1">
+        <div class="container stack-lg">
+
+          <div class="page-header">
+            <div class="page-header-text">
+              <h1>Dashboard</h1>
+              <p>Start a new document analysis and check what is available in the application.</p>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+
+            <!-- Primary column -->
+            <div class="dashboard-main">
+
+              <section class="card start-card" aria-labelledby="start-title">
+                <div class="card-body">
+                  <div class="start-card-text">
+                    <h2 id="start-title">Start a new document analysis</h2>
+                    <p>Open the workspace, choose a PDF or an image, and follow the stages from reading the document to exporting the result.</p>
+                  </div>
+                  <div class="btn-group">
+                    <a class="btn btn-primary" href="workspace.html">
+                      Open document workspace
+                      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M5 12h14"/>
+                        <path d="m13 6 6 6-6 6"/>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="recent-title">
+                <div class="card-header">
+                  <h2 class="card-title" id="recent-title">Recent processing activity</h2>
+                  <span class="badge badge-neutral">Upcoming</span>
+                </div>
+                <div class="card-body">
+                  <div class="empty-state">
+                    <p class="empty-state-title">No recent activity</p>
+                    <p>Documents you process will be listed here once processing history is available.</p>
+                  </div>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="guide-title">
+                <div class="card-header">
+                  <h2 class="card-title" id="guide-title">Processing guidance</h2>
+                </div>
+                <div class="card-body">
+                  <ol class="guide-list">
+                    <li><span><strong>Use clear originals.</strong> Sharp, well-lit images give the most accurate text recognition.</span></li>
+                    <li><span><strong>Prefer text-based PDFs.</strong> Selectable text is read directly and does not need recognition.</span></li>
+                    <li><span><strong>Review every field.</strong> AI results can be wrong, so compare each value with the source text before exporting.</span></li>
+                    <li><span><strong>Check what you send.</strong> AI analysis sends the extracted text to an AI provider, and you will be asked to confirm first.</span></li>
+                  </ol>
+                </div>
+              </section>
+
+            </div>
+
+            <!-- Secondary column -->
+            <div class="dashboard-side">
+
+              <a class="card card-link" href="workspace.html">
+                <div class="card-body stack">
+                  <div class="cluster">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>
+                      <path d="M14 3v5h5"/>
+                      <path d="M9 13h6"/>
+                      <path d="M9 17h6"/>
+                    </svg>
+                    <h2 class="card-title">Document workspace</h2>
+                  </div>
+                  <p class="text-muted text-sm">Go straight to the workspace to upload and review a document.</p>
+                </div>
+              </a>
+
+              <section class="card" aria-labelledby="status-title">
+                <div class="card-header">
+                  <h2 class="card-title" id="status-title">Application status</h2>
+                </div>
+                <div class="card-body">
+                  <dl class="status-list">
+                    <div class="status-row">
+                      <dt>Connection</dt>
+                      <dd><span class="badge badge-success" data-connection-status>Online</span></dd>
+                    </div>
+                    <div class="status-row">
+                      <dt>Text extraction</dt>
+                      <dd><span class="badge badge-neutral">Upcoming</span></dd>
+                    </div>
+                    <div class="status-row">
+                      <dt>Text recognition</dt>
+                      <dd><span class="badge badge-neutral">Upcoming</span></dd>
+                    </div>
+                    <div class="status-row">
+                      <dt>AI analysis</dt>
+                      <dd><span class="badge badge-neutral">Upcoming</span></dd>
+                    </div>
+                    <div class="status-row">
+                      <dt>Export</dt>
+                      <dd><span class="badge badge-neutral">Upcoming</span></dd>
+                    </div>
+                  </dl>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="formats-title">
+                <div class="card-header">
+                  <h2 class="card-title" id="formats-title">Supported file formats</h2>
+                </div>
+                <div class="card-body stack">
+                  <ul class="cluster" aria-label="Supported file formats">
+                    <li class="badge badge-neutral">PDF</li>
+                    <li class="badge badge-neutral">JPG</li>
+                    <li class="badge badge-neutral">JPEG</li>
+                    <li class="badge badge-neutral">PNG</li>
+                    <li class="badge badge-neutral">WEBP</li>
+                  </ul>
+                  <p class="text-muted text-sm">Each file is checked before processing.</p>
+                </div>
+              </section>
+
+            </div>
+          </div>
+
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="site-footer">
+        <p>Designed and Developed by Yadav Web Technologies</p>
+      </footer>
+
+    </div>
+  </div>
+</body>
+</html>
