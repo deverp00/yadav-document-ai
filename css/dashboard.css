@@ -1,0 +1,179 @@
+/* ==========================================================================
+   Yadav Document AI
+   File: css/dashboard.css
+   Purpose: Page-specific styles for dashboard.html.
+   Depends on: css/style.css, css/components.css
+   Developed by Yadav Web Technologies
+
+   Class contract used by dashboard.html:
+     .dashboard-grid     Two-column layout (single column on small screens)
+     .dashboard-main     Primary column
+     .dashboard-side     Secondary column
+     .start-card         Highlighted "start a new analysis" card
+     .status-list        Definition list of label / status rows
+     .status-row         One row inside .status-list
+     .guide-list         Numbered processing guidance list
+   Everything else comes from the shared stylesheets.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. Page layout
+   Phones: one column, main content first.
+   Tablets: secondary cards sit side by side below the main column.
+   Laptops and up: main column plus a fixed-width side column.
+   -------------------------------------------------------------------------- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.dashboard-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.dashboard-side {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: var(--space-5);
+  align-items: start;
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 22rem);
+  }
+
+  .dashboard-side {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   2. Start card
+   The single prominent call to action on the dashboard.
+   -------------------------------------------------------------------------- */
+.start-card {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent-border);
+}
+
+.start-card .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.start-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 56ch;
+}
+
+.start-card-text p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* Buttons fill the width on phones for easy tapping */
+.start-card .btn-group .btn {
+  flex: 1 1 100%;
+}
+
+@media (min-width: 481px) {
+  .start-card .btn-group .btn {
+    flex: 0 0 auto;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   3. Status list
+   Label on the start, status badge on the end. Wraps instead of overflowing
+   when the label or badge is long.
+   -------------------------------------------------------------------------- */
+.status-list {
+  margin: 0;
+  padding: 0;
+}
+
+.status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
+  padding-block: var(--space-3);
+  border-bottom: var(--border);
+}
+
+.status-row:first-child {
+  padding-top: 0;
+}
+
+.status-row:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.status-row dt {
+  min-width: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.status-row dd {
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+
+/* --------------------------------------------------------------------------
+   4. Guidance list
+   Numbered with a CSS counter so numbers are never part of the content.
+   -------------------------------------------------------------------------- */
+.guide-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  counter-reset: guide;
+}
+
+.guide-list li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: start;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  counter-increment: guide;
+}
+
+.guide-list li::before {
+  content: counter(guide);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.guide-list strong {
+  color: var(--color-text);
+  font-weight: 650;
+}
