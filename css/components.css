@@ -1,0 +1,1183 @@
+/* ==========================================================================
+   Yadav Document AI
+   File: css/components.css
+   Purpose: Reusable UI components shared by every page.
+   Depends on: css/style.css (design tokens, shell classes)
+   Developed by Yadav Web Technologies
+
+   Contents
+     1.  Brand
+     2.  Buttons
+     3.  Form controls
+     4.  Cards
+     5.  Sidebar navigation links
+     6.  User / account block
+     7.  Badges
+     8.  Alerts
+     9.  Progress bar
+     10. Stage stepper (Upload > Read > Extract > AI Analysis > Review > Export)
+     11. Spinner and skeleton loaders
+     12. Empty state
+     13. Tables
+     14. Toasts
+     15. Modal dialog
+     ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. Brand
+   -------------------------------------------------------------------------- */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.brand:hover {
+  color: var(--color-text);
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius);
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.brand-name {
+  font-size: var(--text-base);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.brand-sub {
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle);
+}
+
+
+/* --------------------------------------------------------------------------
+   2. Buttons
+   Usage: <button class="btn btn-primary">  (also btn-secondary, btn-ghost,
+          btn-danger; sizes btn-sm; modifier btn-block)
+   Icon-only: <button class="btn btn-icon btn-ghost" aria-label="...">
+   Loading:   add aria-busy="true" to show the inline spinner
+   -------------------------------------------------------------------------- */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target);
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease),
+    transform var(--duration-fast) var(--ease);
+}
+
+.btn:active:not(:disabled):not([aria-disabled="true"]) {
+  transform: translateY(1px);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.55;
+  box-shadow: none;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-text-on-accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  color: var(--color-text-on-accent);
+}
+
+.btn-primary:active:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--color-accent-active);
+  border-color: var(--color-accent-active);
+}
+
+.btn-secondary {
+  background: var(--color-surface);
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--color-surface-muted);
+  border-color: var(--color-text-subtle);
+  color: var(--color-text);
+}
+
+.btn-ghost {
+  color: var(--color-text-muted);
+}
+
+.btn-ghost:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}
+
+.btn-danger {
+  background: var(--color-surface);
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+.btn-danger:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--color-danger);
+  color: #ffffff;
+}
+
+.btn-sm {
+  min-height: 2.25rem;
+  padding: 0.35rem 0.75rem;
+  font-size: var(--text-xs);
+}
+
+.btn-icon {
+  width: var(--tap-target);
+  padding: 0;
+}
+
+.btn-icon.btn-sm {
+  width: 2.25rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* Icons placed inside buttons, links and nav items */
+.icon {
+  flex: 0 0 auto;
+  width: 1.125rem;
+  height: 1.125rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Loading state: keeps width stable, hides label, shows spinner */
+.btn[aria-busy="true"] {
+  color: transparent;
+  pointer-events: none;
+}
+
+.btn[aria-busy="true"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1rem;
+  height: 1rem;
+  margin: -0.5rem 0 0 -0.5rem;
+  border: 2px solid var(--color-text-on-accent);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: yda-spin 0.7s linear infinite;
+}
+
+.btn-secondary[aria-busy="true"]::after,
+.btn-ghost[aria-busy="true"]::after,
+.btn-danger[aria-busy="true"]::after {
+  border-color: var(--color-accent);
+  border-right-color: transparent;
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+
+/* --------------------------------------------------------------------------
+   3. Form controls
+   Markup pattern:
+     <div class="field">
+       <label class="label" for="x">Label</label>
+       <input class="input" id="x" aria-describedby="x-hint x-error">
+       <p class="hint" id="x-hint">Helper text</p>
+       <p class="field-error" id="x-error" hidden>Error text</p>
+     </div>
+   Invalid state: aria-invalid="true" on the control.
+   -------------------------------------------------------------------------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.hint {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.field-error {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-danger);
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  min-height: var(--tap-target);
+  padding: 0.55rem 0.75rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  font-size: var(--text-base);
+  line-height: 1.4;
+  transition:
+    border-color var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease),
+    background-color var(--duration-fast) var(--ease);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-text-subtle);
+}
+
+.input:hover:not(:disabled),
+.select:hover:not(:disabled),
+.textarea:hover:not(:disabled) {
+  border-color: var(--color-text-subtle);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+.input:focus-visible,
+.select:focus-visible,
+.textarea:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 0;
+}
+
+.input:disabled,
+.select:disabled,
+.textarea:disabled,
+.input[readonly] {
+  background: var(--color-surface-muted);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.input[aria-invalid="true"],
+.select[aria-invalid="true"],
+.textarea[aria-invalid="true"] {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px var(--color-danger-soft);
+}
+
+.textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+/* Select with a custom chevron (inline SVG data URI, no external asset) */
+.select {
+  padding-inline-end: 2.25rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23566074' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+}
+
+/* Checkbox and radio rows */
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-height: var(--tap-target);
+  padding-block: var(--space-2);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.check input {
+  flex: 0 0 auto;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin: 0.15rem 0 0;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+}
+
+/* Two-column form rows collapse to one column on narrow screens */
+.form-row {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .form-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   4. Cards
+   -------------------------------------------------------------------------- */
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-4);
+  border-bottom: var(--border);
+}
+
+.card-title {
+  font-size: var(--text-base);
+  font-weight: 650;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--space-4);
+}
+
+.card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-top: var(--border);
+  background: var(--color-surface-muted);
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+/* Cards that act as a single link (dashboard shortcuts) */
+.card-link {
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease);
+}
+
+.card-link:hover {
+  color: inherit;
+  border-color: var(--color-accent-border);
+  box-shadow: var(--shadow-md);
+}
+
+@media (min-width: 768px) {
+  .card-header,
+  .card-body {
+    padding: var(--space-5);
+  }
+
+  .card-footer {
+    padding-inline: var(--space-5);
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   5. Sidebar navigation links
+   Markup:
+     <nav class="sidebar-nav" aria-label="Primary">
+       <ul class="nav-list">
+         <li><a class="nav-link" href="..." aria-current="page">...</a></li>
+         <li><a class="nav-link is-upcoming" aria-disabled="true">
+               Name <span class="badge badge-neutral">Upcoming</span></a></li>
+   -------------------------------------------------------------------------- */
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--tap-target);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-weight: 550;
+  text-decoration: none;
+  transition:
+    background-color var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease);
+}
+
+.nav-link:hover {
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}
+
+.nav-link[aria-current="page"] {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-weight: 650;
+}
+
+.nav-link .badge {
+  margin-inline-start: auto;
+}
+
+/* Sections that exist in navigation but are not built yet */
+.nav-link.is-upcoming,
+.nav-link[aria-disabled="true"] {
+  color: var(--color-text-subtle);
+  cursor: not-allowed;
+}
+
+.nav-link.is-upcoming:hover,
+.nav-link[aria-disabled="true"]:hover {
+  background: transparent;
+  color: var(--color-text-subtle);
+}
+
+.nav-heading {
+  padding: var(--space-3) 0.75rem var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+
+/* --------------------------------------------------------------------------
+   6. User / account block
+   Used in the topbar. Shows a guest state until accounts are implemented.
+   -------------------------------------------------------------------------- */
+.user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  font-weight: 550;
+  text-decoration: none;
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--color-surface-muted);
+  border: var(--border);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+/* Name label hidden on very small screens, avatar stays */
+.user-chip-label {
+  display: none;
+}
+
+@media (min-width: 481px) {
+  .user-chip-label {
+    display: inline;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   7. Badges
+   Always contain text so meaning never relies on color alone.
+   -------------------------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.15rem 0.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-size: var(--text-xs);
+  font-weight: 650;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.badge-neutral {
+  background: var(--color-surface-muted);
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.badge-accent {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent-border);
+  color: var(--color-accent);
+}
+
+.badge-success {
+  background: var(--color-success-soft);
+  border-color: #b7dcc8;
+  color: var(--color-success);
+}
+
+.badge-warning {
+  background: var(--color-warning-soft);
+  border-color: #ecd49a;
+  color: var(--color-warning);
+}
+
+.badge-danger {
+  background: var(--color-danger-soft);
+  border-color: #efc0c3;
+  color: var(--color-danger);
+}
+
+
+/* --------------------------------------------------------------------------
+   8. Alerts (inline, persistent messages)
+   Markup:
+     <div class="alert alert-warning" role="alert">
+       <svg class="icon">...</svg>
+       <div class="alert-body"><p class="alert-title">Title</p><p>Text</p></div>
+     </div>
+   Use role="status" for non-urgent information.
+   -------------------------------------------------------------------------- */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-size: var(--text-sm);
+}
+
+.alert .icon {
+  margin-top: 0.1rem;
+}
+
+.alert-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.alert-title {
+  font-weight: 650;
+}
+
+.alert-info {
+  background: var(--color-info-soft);
+  border-color: #bad4ee;
+  color: var(--color-info);
+}
+
+.alert-success {
+  background: var(--color-success-soft);
+  border-color: #b7dcc8;
+  color: var(--color-success);
+}
+
+.alert-warning {
+  background: var(--color-warning-soft);
+  border-color: #ecd49a;
+  color: var(--color-warning);
+}
+
+.alert-danger {
+  background: var(--color-danger-soft);
+  border-color: #efc0c3;
+  color: var(--color-danger);
+}
+
+
+/* --------------------------------------------------------------------------
+   9. Progress bar
+   Determinate:   <div class="progress"><div class="progress-bar" style set by JS
+                  via the --progress custom property: element.style.setProperty
+                  ('--progress', '40%')></div></div>
+   Indeterminate: add class "is-indeterminate" to .progress
+   Include role="progressbar" with aria-valuenow on .progress in markup.
+   -------------------------------------------------------------------------- */
+.progress {
+  position: relative;
+  height: 0.5rem;
+  overflow: hidden;
+  background: var(--color-surface-muted);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.progress-bar {
+  height: 100%;
+  width: 100%;
+  background: var(--color-accent);
+  transform-origin: left center;
+  transform: scaleX(calc(var(--progress, 0%) / 100%));
+  transition: transform var(--duration-slow) var(--ease);
+}
+
+/* Fallback for browsers that cannot divide percentages in calc():
+   JS may instead set --progress-ratio (0 to 1). */
+@supports not (transform: scaleX(calc(50% / 100%))) {
+  .progress-bar {
+    transform: scaleX(var(--progress-ratio, 0));
+  }
+}
+
+.progress.is-indeterminate .progress-bar {
+  width: 40%;
+  transform: none;
+  animation: yda-indeterminate 1.2s var(--ease) infinite;
+}
+
+
+/* --------------------------------------------------------------------------
+   10. Stage stepper
+   Markup:
+     <ol class="stepper" aria-label="Processing stages">
+       <li class="step is-complete"><span class="step-marker">1</span>
+           <span class="step-label">Upload</span></li>
+       <li class="step is-current" aria-current="step">...</li>
+       <li class="step">...</li>
+     </ol>
+   The state is also announced through text/aria-current, not color alone.
+   Small screens: stages wrap into a two-column grid instead of scrolling.
+   -------------------------------------------------------------------------- */
+.stepper {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-2) var(--space-3);
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text-subtle);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+.step-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 50%;
+  background: var(--color-surface);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.step-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.step.is-current {
+  border-color: var(--color-accent-border);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.step.is-current .step-marker {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
+}
+
+.step.is-complete {
+  color: var(--color-success);
+}
+
+.step.is-complete .step-marker {
+  border-color: var(--color-success);
+  background: var(--color-success);
+  color: #ffffff;
+}
+
+.step.is-error {
+  border-color: #efc0c3;
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+.step.is-error .step-marker {
+  border-color: var(--color-danger);
+  background: var(--color-danger);
+  color: #ffffff;
+}
+
+/* Tablet: three per row. Laptop and up: single connected row. */
+@media (min-width: 768px) {
+  .stepper {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .stepper {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   11. Spinner and skeleton loaders
+   Skeletons must be given the same dimensions as the content they replace
+   to avoid layout shift.
+   -------------------------------------------------------------------------- */
+.spinner {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--color-border-strong);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: yda-spin 0.7s linear infinite;
+}
+
+.spinner-lg {
+  width: 2rem;
+  height: 2rem;
+  border-width: 3px;
+}
+
+.skeleton {
+  display: block;
+  min-height: 1rem;
+  border-radius: var(--radius);
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-muted) 25%,
+    #e6e9ee 37%,
+    var(--color-surface-muted) 63%
+  );
+  background-size: 400% 100%;
+  animation: yda-shimmer 1.4s ease infinite;
+}
+
+.skeleton-line {
+  height: 0.875rem;
+}
+
+.skeleton-line + .skeleton-line {
+  margin-top: var(--space-2);
+}
+
+
+/* --------------------------------------------------------------------------
+   12. Empty state
+   -------------------------------------------------------------------------- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+}
+
+.empty-state-title {
+  font-size: var(--text-base);
+  font-weight: 650;
+}
+
+.empty-state p {
+  max-width: 44ch;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+
+/* --------------------------------------------------------------------------
+   13. Tables
+   Wrap in .table-wrap so wide tables scroll inside their container instead
+   of causing page-level horizontal scrolling.
+   -------------------------------------------------------------------------- */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  min-width: 32rem;
+  font-size: var(--text-sm);
+}
+
+.table th,
+.table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table th {
+  background: var(--color-surface-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   14. Toasts
+   Container is created by js/script.js:
+     <div class="toast-region" role="region" aria-label="Notifications">
+   Each toast should set role="status" (or role="alert" for errors) so screen
+   readers announce it. Toasts slide in with transform and opacity only.
+   -------------------------------------------------------------------------- */
+.toast-region {
+  position: fixed;
+  inset-inline: var(--space-3);
+  bottom: var(--space-3);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2);
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-text);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  color: #ffffff;
+  font-size: var(--text-sm);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition:
+    opacity var(--duration-base) var(--ease),
+    transform var(--duration-base) var(--ease);
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-message {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.toast-close {
+  flex: 0 0 auto;
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  color: inherit;
+  opacity: 0.8;
+}
+
+.toast-close:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Left status stripe plus the text label keeps meaning non-color-only */
+.toast-success { border-inline-start: 4px solid #4cc38a; }
+.toast-error { border-inline-start: 4px solid #f0777d; }
+.toast-warning { border-inline-start: 4px solid #f0be54; }
+.toast-info { border-inline-start: 4px solid #6fa8e0; }
+
+@media (min-width: 481px) {
+  .toast-region {
+    inset-inline: auto var(--space-5);
+    bottom: var(--space-5);
+    width: min(24rem, calc(100vw - 2 * var(--space-5)));
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   15. Modal dialog
+   Built for the native <dialog> element:
+     <dialog class="modal" aria-labelledby="m-title">
+       <div class="modal-panel">
+         <header class="modal-header">
+           <h2 class="modal-title" id="m-title">Title</h2>
+           <button class="btn btn-icon btn-ghost" aria-label="Close">...</button>
+         </header>
+         <div class="modal-body">...</div>
+         <footer class="modal-footer">...</footer>
+       </div>
+     </dialog>
+   Open with dialog.showModal(). The browser provides focus trapping and
+   Escape handling. Add class "is-open" shortly after showModal() (and remove
+   it before close()) to run the enter and exit transition.
+   Small screens: panel docks to the bottom as a sheet with safe-area padding.
+   -------------------------------------------------------------------------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  overflow: hidden;
+}
+
+.modal:not([open]) {
+  display: none;
+}
+
+.modal::backdrop {
+  background: rgba(20, 28, 45, 0.5);
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease);
+}
+
+.modal.is-open::backdrop {
+  opacity: 1;
+}
+
+.modal[open] {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 90vh;
+  max-height: 90dvh;
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition:
+    opacity var(--duration-slow) var(--ease),
+    transform var(--duration-slow) var(--ease);
+}
+
+.modal.is-open .modal-panel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--border);
+}
+
+.modal-title {
+  font-size: var(--text-lg);
+}
+
+.modal-body {
+  flex: 1 1 auto;
+  padding: var(--space-4);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.modal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+  border-top: var(--border);
+}
+
+/* On very narrow screens footer buttons fill the width */
+@media (max-width: 480px) {
+  .modal-footer .btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* Tablets and up: centered dialog */
+@media (min-width: 768px) {
+  .modal[open] {
+    align-items: center;
+    padding: var(--space-5);
+  }
+
+  .modal-panel {
+    width: min(100%, 34rem);
+    max-height: 85vh;
+    max-height: 85dvh;
+    border-radius: var(--radius);
+    transform: translateY(0.75rem) scale(0.98);
+  }
+
+  .modal.is-open .modal-panel {
+    transform: translateY(0) scale(1);
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding-inline: var(--space-5);
+  }
+
+  .modal-footer {
+    padding-bottom: var(--space-3);
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   Keyframes (transform and opacity based; disabled by reduced-motion rule
+   in css/style.css)
+   -------------------------------------------------------------------------- */
+@keyframes yda-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes yda-shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+@keyframes yda-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(250%);
+  }
+}
