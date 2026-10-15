@@ -201,20 +201,30 @@
           </section>
 
           <!-- Upload -->
-          <section class="stack" aria-labelledby="upload-title">
-            <h2 class="visually-hidden" id="upload-title">Upload a document</h2>
+<section class="stack" aria-labelledby="upload-title">
+  <h2 class="visually-hidden" id="upload-title">Upload a document</h2>
 
-            <label class="dropzone is-disabled" for="file-input">
-              <svg class="icon dropzone-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M12 16V5"/>
-                <path d="m7 9 5-5 5 5"/>
-                <path d="M5 20h14"/>
-              </svg>
-              <span class="dropzone-title">Choose a document</span>
-              <span class="dropzone-hint"><span class="dropzone-drag-hint">Drag and drop a file here, or </span>select a file from your device.</span>
-              <span class="dropzone-formats">PDF, JPG, JPEG, PNG, or WEBP</span>
-              <input class="visually-hidden" type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp" aria-describedby="file-error" disabled>
-            </label>
+  <label class="dropzone" for="file-input">
+    <svg class="icon dropzone-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 16V5"/>
+      <path d="m7 9 5-5 5 5"/>
+      <path d="M5 20h14"/>
+    </svg>
+
+    <span class="dropzone-title">Choose a document</span>
+    <span class="dropzone-hint">
+      <span class="dropzone-drag-hint">Drag and drop a file here, or </span>select a file from your device.
+    </span>
+    <span class="dropzone-formats">PDF, JPG, JPEG, PNG, or WEBP</span>
+
+    <input
+      class="visually-hidden"
+      type="file"
+      id="file-input"
+      accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp"
+      aria-describedby="file-error"
+    >
+  </label>
             <p class="field-error" id="file-error" role="alert" hidden></p>
 
             <div class="file-info" id="file-info" hidden>
