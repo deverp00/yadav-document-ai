@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<!--
+  Yadav Document AI
+  File: workspace.html
+  Purpose: Document workspace page (interface only in Phase 2).
+  Depends on: css/style.css, css/components.css, css/workspace.css,
+              js/script.js, js/workspace.js
+  Developed by Yadav Web Technologies
+
+  State of this file: the interface is complete, but upload, extraction,
+  analysis and export are implemented in Phase 3 and later. Every control that
+  cannot work yet is disabled in the markup. The scripts enable controls only
+  when they actually work.
+
+  The sidebar, overlay, top bar and footer are the shared shell from
+  dashboard.html.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Document Workspace | Yadav Document AI</title>
+  <meta name="description" content="Upload a document, review the extracted text and fields, and export the results.">
+  <meta name="theme-color" content="#2253d4">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232253d4'/%3E%3Cpath d='M10 9l6 8 6-8M16 17v7' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/workspace.css">
+  <script src="js/script.js" defer></script>
+  <script src="js/workspace.js" defer></script>
+</head>
+<body data-page="workspace">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="app-shell">
+
+    <!-- ===================== Sidebar ===================== -->
+    <aside class="sidebar" id="sidebar" aria-label="Application sidebar">
+      <div class="sidebar-header">
+        <a class="brand" href="dashboard.html" aria-label="Yadav Document AI dashboard">
+          <span class="brand-mark" aria-hidden="true">YD</span>
+          <span class="brand-text">
+            <span class="brand-name">Yadav Document AI</span>
+            <span class="brand-sub">by Yadav Web Technologies</span>
+          </span>
+        </a>
+        <button type="button" class="btn btn-icon btn-ghost sidebar-close" data-nav-close aria-label="Close navigation menu">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6 6l12 12"/>
+            <path d="M18 6L6 18"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Primary">
+        <ul class="nav-list">
+          <li>
+            <a class="nav-link" href="dashboard.html" data-page="dashboard">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="3" y="3" width="7" height="9" rx="1"/>
+                <rect x="14" y="3" width="7" height="5" rx="1"/>
+                <rect x="14" y="12" width="7" height="9" rx="1"/>
+                <rect x="3" y="16" width="7" height="5" rx="1"/>
+              </svg>
+              <span class="nav-label">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="workspace.html" data-page="workspace" aria-current="page">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>
+                <path d="M14 3v5h5"/>
+                <path d="M9 13h6"/>
+                <path d="M9 17h6"/>
+              </svg>
+              <span class="nav-label">Document Workspace</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="history.html" data-page="history">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v5l3 2"/>
+              </svg>
+              <span class="nav-label">Processing History</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link is-upcoming" href="#" data-page="export" aria-disabled="true">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 4v11"/>
+                <path d="m7 11 5 5 5-5"/>
+                <path d="M5 20h14"/>
+              </svg>
+              <span class="nav-label">Export Center</span>
+              <span class="badge badge-neutral">Upcoming</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href="settings.html" data-page="settings">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4 6h10"/>
+                <path d="M18 6h2"/>
+                <circle cx="16" cy="6" r="2"/>
+                <path d="M4 12h2"/>
+                <path d="M10 12h10"/>
+                <circle cx="8" cy="12" r="2"/>
+                <path d="M4 18h10"/>
+                <path d="M18 18h2"/>
+                <circle cx="16" cy="18" r="2"/>
+              </svg>
+              <span class="nav-label">Settings</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link is-upcoming" href="#" data-page="help" aria-disabled="true">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7"/>
+                <path d="M12 17h.01"/>
+              </svg>
+              <span class="nav-label">Help</span>
+              <span class="badge badge-neutral">Upcoming</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>Files are read in your browser. Extracted text is sent for AI analysis only after you confirm.</p>
+      </div>
+    </aside>
+
+    <div class="sidebar-overlay" aria-hidden="true"></div>
+
+    <!-- ===================== Page body ===================== -->
+    <div class="app-body">
+
+      <!-- Top bar -->
+      <header class="topbar">
+        <div class="topbar-start">
+          <button type="button" class="btn btn-icon btn-ghost nav-toggle" data-nav-toggle aria-label="Open navigation menu">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4 6h16"/>
+              <path d="M4 12h16"/>
+              <path d="M4 18h16"/>
+            </svg>
+          </button>
+          <span class="topbar-title">Document Workspace</span>
+        </div>
+        <div class="topbar-end">
+          <span class="badge badge-success" data-connection-status>Online</span>
+          <span class="user-chip" aria-label="Guest session">
+            <span class="avatar" aria-hidden="true">G</span>
+            <span class="user-chip-label">Guest</span>
+          </span>
+        </div>
+      </header>
+
+      <!-- Main content -->
+      <main class="main" id="main" tabindex="-1">
+        <div class="container stack-lg">
+
+          <div class="page-header">
+            <div class="page-header-text">
+              <h1>Document Workspace</h1>
+              <p>Upload a document, review the extracted text, and check the fields before exporting them.</p>
+            </div>
+          </div>
+
+          <div class="alert alert-info" role="status">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 11v5"/>
+              <path d="M12 8h.01"/>
+            </svg>
+            <div class="alert-body">
+              <p class="alert-title">Processing is not available yet</p>
+              <p>The workspace layout is ready. Upload, text extraction, AI analysis, and export are being built in the next development phases, so those controls are disabled for now.</p>
+            </div>
+          </div>
+
+          <!-- Stages and status -->
+          <section class="stack" aria-label="Processing progress">
+            <ol class="stepper" aria-label="Processing stages">
+              <li class="step is-current" data-stage="upload" aria-current="step"><span class="step-marker" aria-hidden="true">1</span><span class="step-label">Upload</span></li>
+              <li class="step" data-stage="read"><span class="step-marker" aria-hidden="true">2</span><span class="step-label">Read</span></li>
+              <li class="step" data-stage="extract"><span class="step-marker" aria-hidden="true">3</span><span class="step-label">Extract</span></li>
+              <li class="step" data-stage="analysis"><span class="step-marker" aria-hidden="true">4</span><span class="step-label">AI Analysis</span></li>
+              <li class="step" data-stage="review"><span class="step-marker" aria-hidden="true">5</span><span class="step-label">Review</span></li>
+              <li class="step" data-stage="export"><span class="step-marker" aria-hidden="true">6</span><span class="step-label">Export</span></li>
+            </ol>
+            <div class="workspace-status" id="workspace-status" role="status">
+              <span class="workspace-status-text" id="workspace-status-text">No document selected.</span>
+            </div>
+          </section>
+
+          <!-- Upload -->
+          <section class="stack" aria-labelledby="upload-title">
+            <h2 class="visually-hidden" id="upload-title">Upload a document</h2>
+
+            <label class="dropzone is-disabled" for="file-input">
+              <svg class="icon dropzone-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 16V5"/>
+                <path d="m7 9 5-5 5 5"/>
+                <path d="M5 20h14"/>
+              </svg>
+              <span class="dropzone-title">Choose a document</span>
+              <span class="dropzone-hint"><span class="dropzone-drag-hint">Drag and drop a file here, or </span>select a file from your device.</span>
+              <span class="dropzone-formats">PDF, JPG, JPEG, PNG, or WEBP</span>
+              <input class="visually-hidden" type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp" aria-describedby="file-error" disabled>
+            </label>
+            <p class="field-error" id="file-error" role="alert" hidden></p>
+
+            <div class="file-info" id="file-info" hidden>
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>
+                <path d="M14 3v5h5"/>
+              </svg>
+              <div class="file-info-text">
+                <span class="file-info-name" id="file-name">No file</span>
+                <span class="file-info-meta" id="file-meta"></span>
+              </div>
+              <div class="file-info-actions">
+                <button type="button" class="btn btn-secondary btn-sm" id="replace-file-button">Replace</button>
+                <button type="button" class="btn btn-danger btn-sm" id="remove-file-button">Remove</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Panel tabs (below 1280px) -->
+          <div class="workspace-tabs" role="tablist" aria-label="Workspace panels">
+            <button type="button" class="workspace-tab" role="tab" id="tab-preview" aria-controls="panel-preview" aria-selected="true">Preview</button>
+            <button type="button" class="workspace-tab" role="tab" id="tab-text" aria-controls="panel-text" aria-selected="false" tabindex="-1">Text</button>
+            <button type="button" class="workspace-tab" role="tab" id="tab-results" aria-controls="panel-results" aria-selected="false" tabindex="-1">Results</button>
+          </div>
+
+          <!-- Panels -->
+          <div class="workspace-layout">
+
+            <!-- Preview -->
+            <section class="card workspace-panel panel-preview is-active" id="panel-preview" role="tabpanel" aria-labelledby="tab-preview">
+              <div class="card-header">
+                <h2 class="card-title">Document preview</h2>
+                <span class="badge badge-neutral" id="preview-badge">No document</span>
+              </div>
+              <div class="panel-toolbar" role="toolbar" aria-label="Preview controls">
+                <div class="toolbar-group">
+                  <button type="button" class="btn btn-icon btn-secondary btn-sm" id="prev-page-button" aria-label="Previous page" disabled>
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 6-6 6 6 6"/></svg>
+                  </button>
+                  <span class="toolbar-text" id="page-indicator">No pages</span>
+                  <button type="button" class="btn btn-icon btn-secondary btn-sm" id="next-page-button" aria-label="Next page" disabled>
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg>
+                  </button>
+                </div>
+                <span class="toolbar-spacer"></span>
+                <div class="toolbar-group">
+                  <button type="button" class="btn btn-icon btn-secondary btn-sm" id="zoom-out-button" aria-label="Zoom out" disabled>
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="toolbar-text" id="zoom-level">100%</span>
+                  <button type="button" class="btn btn-icon btn-secondary btn-sm" id="zoom-in-button" aria-label="Zoom in" disabled>
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+                  </button>
+                  <button type="button" class="btn btn-secondary btn-sm" id="zoom-fit-button" disabled>Fit</button>
+                </div>
+              </div>
+              <div class="preview-viewport" id="preview-viewport" tabindex="0" role="region" aria-label="Document preview area">
+                <div class="preview-empty" id="preview-empty">
+                  <p class="empty-state-title">Nothing to preview</p>
+                  <p>The selected document will appear here.</p>
+                </div>
+                <div class="preview-stage" id="preview-stage" hidden></div>
+              </div>
+              <div class="panel-loading" id="preview-loading" role="status" hidden>
+                <span class="spinner spinner-lg" aria-hidden="true"></span>
+                <span>Preparing preview</span>
+              </div>
+            </section>
+
+            <!-- Extracted text -->
+            <section class="card workspace-panel panel-text" id="panel-text" role="tabpanel" aria-labelledby="tab-text" tabindex="0">
+              <div class="card-header">
+                <h2 class="card-title">Extracted text</h2>
+                <span class="badge badge-neutral" id="extraction-badge">Not started</span>
+              </div>
+              <div class="panel-toolbar" role="toolbar" aria-label="Text controls">
+                <div class="toolbar-group">
+                  <button type="button" class="btn btn-secondary btn-sm" id="copy-text-button" disabled>
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
+                    Copy
+                  </button>
+                  <button type="button" class="btn btn-ghost btn-sm" id="clear-text-button" disabled>
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"/><path d="M9 7V4h6v3"/></svg>
+                    Clear
+                  </button>
+                </div>
+                <span class="toolbar-spacer"></span>
+                <p class="text-stats">
+                  <span id="char-count">Characters: 0</span>
+                  <span id="word-count">Words: 0</span>
+                </p>
+              </div>
+              <div class="card-body">
+                <label class="visually-hidden" for="extracted-text">Extracted text</label>
+                <textarea class="textarea extracted-text" id="extracted-text" placeholder="Extracted text will appear here. You can edit it before analysis." disabled></textarea>
+              </div>
+              <div class="panel-loading" id="text-loading" role="status" hidden>
+                <span class="spinner spinner-lg" aria-hidden="true"></span>
+                <span>Extracting text</span>
+              </div>
+            </section>
+
+            <!-- Results -->
+            <section class="card workspace-panel panel-results" id="panel-results" role="tabpanel" aria-labelledby="tab-results" tabindex="0">
+              <div class="card-header">
+                <h2 class="card-title">Results</h2>
+                <span class="badge badge-neutral" id="analysis-badge">Awaiting analysis</span>
+              </div>
+              <div class="card-body stack">
+
+                <div class="consent">
+                  <label class="check" for="ai-consent">
+                    <input type="checkbox" id="ai-consent" disabled>
+                    <span>I understand that the extracted text will be sent through a secure server to the AI provider for analysis.</span>
+                  </label>
+                </div>
+
+                <p class="results-summary">
+                  <span class="text-muted">Document type:</span>
+                  <span class="badge badge-neutral" id="document-type">Not analyzed</span>
+                </p>
+
+                <div class="empty-state" id="results-empty">
+                  <p class="empty-state-title">No fields yet</p>
+                  <p>Analyze the text to list names, dates, and reference numbers here. You can then edit, add, or remove fields.</p>
+                </div>
+                <ul class="results-list" id="results-list" hidden></ul>
+
+                <div class="results-notes" id="results-notes" aria-live="polite"></div>
+
+                <form class="add-field" id="add-field-form" novalidate>
+                  <div class="field">
+                    <label class="label" for="new-field-label">Field name</label>
+                    <input class="input" type="text" id="new-field-label" autocomplete="off" disabled>
+                  </div>
+                  <div class="field">
+                    <label class="label" for="new-field-value">Value</label>
+                    <input class="input" type="text" id="new-field-value" autocomplete="off" disabled>
+                  </div>
+                  <button type="submit" class="btn btn-secondary" id="add-field-button" disabled>Add field</button>
+                </form>
+
+              </div>
+              <div class="panel-loading" id="results-loading" role="status" hidden>
+                <span class="spinner spinner-lg" aria-hidden="true"></span>
+                <span>Analyzing document</span>
+              </div>
+            </section>
+
+          </div>
+
+          <!-- Actions -->
+          <div class="workspace-actionbar">
+            <button type="button" class="btn btn-primary" id="analyze-button" disabled>Analyze with AI</button>
+            <button type="button" class="btn btn-secondary" id="export-button" data-modal-open="export-dialog" disabled>Export results</button>
+          </div>
+
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="site-footer">
+        <p>Designed and Developed by Yadav Web Technologies</p>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- Export dialog -->
+  <dialog class="modal" id="export-dialog" aria-labelledby="export-title">
+    <div class="modal-panel">
+      <header class="modal-header">
+        <h2 class="modal-title" id="export-title">Export results</h2>
+        <button type="button" class="btn btn-icon btn-ghost" data-modal-close aria-label="Close export dialog">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6 6l12 12"/>
+            <path d="M18 6L6 18"/>
+          </svg>
+        </button>
+      </header>
+      <div class="modal-body stack">
+        <p class="text-muted text-sm">Choose a format. The file is created in your browser and downloaded to your device.</p>
+        <button type="button" class="btn btn-secondary btn-block" data-export="txt" disabled>Plain text (.txt)</button>
+        <button type="button" class="btn btn-secondary btn-block" data-export="json" disabled>Structured data (.json)</button>
+        <button type="button" class="btn btn-secondary btn-block" data-export="csv" disabled>Spreadsheet (.csv)</button>
+      </div>
+      <footer class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close>Cancel</button>
+      </footer>
+    </div>
+  </dialog>
+</body>
+</html>
